@@ -1,0 +1,244 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+const pasos = [
+  {
+    titulo: "Envía tu sugerencia",
+    texto: "Completa el formulario con tu idea o propuesta de mejora. Puedes hacerlo de forma anónima.",
+  },
+  {
+    titulo: "Revisión responsable",
+    texto: "Las sugerencias son revisadas por las personas designadas por la institución.",
+  },
+  {
+    titulo: "Respuesta institucional",
+    texto: "Las propuestas viables se atienden y difunden por los canales oficiales de la unidad educativa.",
+  },
+];
+---
+
+<BaseLayout title="Sugerencias">
+  <main class="container">
+    <header class="page-head">
+      <h1 class="title">Sugerencias y opiniones</h1>
+      <p class="page-intro">
+        Este espacio permite que estudiantes, madres, padres, tutores, docentes
+        y personal administrativo expresen sus ideas y propongan mejoras para
+        nuestra unidad educativa.
+      </p>
+    </header>
+
+    <section class="pasos" aria-label="Cómo funciona el espacio de sugerencias">
+      {pasos.map((paso, index) => (
+        <article class="paso">
+          <span class="paso-numero">{index + 1}</span>
+          <h2 class="paso-titulo">{paso.titulo}</h2>
+          <p class="paso-texto">{paso.texto}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="form-section" aria-labelledby="formulario-titulo">
+      <h2 id="formulario-titulo" class="form-titulo">Envía tu sugerencia</h2>
+      <form id="sugerencia-form" class="suggestion-form">
+        <div class="field">
+          <label for="nombre">Nombre (opcional)</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            maxlength="80"
+            autocomplete="name"
+            placeholder="Puedes enviarla de forma anónima"
+          />
+        </div>
+
+        <div class="field">
+          <label for="rol">¿Cómo participas en la comunidad educativa? <span class="requerido">*</span></label>
+          <select id="rol" name="rol" required>
+            <option value="">Selecciona una opción</option>
+            <option value="Estudiante">Estudiante</option>
+            <option value="Madre, padre o tutor">Madre, padre o tutor</option>
+            <option value="Docente">Docente</option>
+            <option value="Personal administrativo">Personal administrativo</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="mensaje">Tu sugerencia u opinión <span class="requerido">*</span></label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            rows="5"
+            maxlength="1000"
+            required
+            placeholder="Describe tu idea o propuesta de mejora para la unidad educativa..."
+          ></textarea>
+        </div>
+
+        <p class="form-note">
+          No incluyas datos personales de terceros ni mensajes ofensivos. Las
+          sugerencias serán revisadas por responsables designados antes de su
+          difusión.
+        </p>
+
+        <button type="submit" class="btn-whatsapp">
+          Enviar sugerencia por WhatsApp
+        </button>
+        <p class="form-feedback" id="sugerencia-feedback" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <aside class="nota">
+      <h2 class="nota-titulo">Uso responsable de este espacio</h2>
+      <p class="nota-texto">
+        El formulario solicita únicamente los datos necesarios. Las sugerencias
+        no se publican automáticamente: son revisadas por la institución para
+        proteger los datos personales y mantener una comunicación respetuosa.
+      </p>
+    </aside>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--gap-lg);
+  }
+  .pasos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-sm);
+    margin-bottom: var(--gap-lg);
+  }
+  .paso {
+    background-color: var(--white);
+    border: 1px solid var(--iron-200);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .paso-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--green-700);
+    color: var(--white);
+    font-weight: 700;
+    font-size: var(--text-14);
+  }
+  .paso-titulo {
+    font-size: var(--text-16);
+    color: var(--green-900);
+  }
+  .paso-texto {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.5;
+  }
+  .form-section {
+    background-color: var(--white);
+    border: 1px solid var(--iron-200);
+    border-radius: 8px;
+    padding: var(--gap-md);
+  }
+  .form-titulo {
+    font-size: var(--text-20);
+    color: var(--green-900);
+    margin-bottom: var(--gap-sm);
+  }
+  .suggestion-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .field label {
+    font-size: var(--text-14);
+    font-weight: 700;
+    color: var(--green-900);
+  }
+  .requerido {
+    color: #c0392b;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--iron-300);
+    border-radius: 6px;
+    font-size: var(--text-14);
+    font-family: inherit;
+    color: var(--green-950);
+    background-color: var(--white);
+    box-sizing: border-box;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: 2px solid var(--green-400);
+    outline-offset: 1px;
+    border-color: var(--green-500);
+  }
+  .form-note {
+    font-size: var(--text-12);
+    color: var(--iron-600);
+    line-height: 1.5;
+  }
+  .btn-whatsapp {
+    background-color: #25d366;
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    min-height: 48px;
+    border-radius: 6px;
+    font-size: var(--text-16);
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: filter 0.2s;
+  }
+  .btn-whatsapp:hover {
+    filter: brightness(0.95);
+  }
+  .form-feedback {
+    min-height: 20px;
+    font-size: var(--text-14);
+    color: var(--green-800);
+    line-height: 1.5;
+  }
+  .form-feedback.error {
+    color: #c0392b;
+  }
+  .nota {
+    margin-top: var(--gap-lg);
+    background-color: var(--green-50);
+    border-left: 4px solid var(--green-600);
+    border-radius: 8px;
+    padding: var(--gap-md);
+  }
+  .nota-titulo {
+    font-size: var(--text-18);
+    color: var(--green-900);
+    margin-bottom: 6px;
+  }
+  .nota-texto {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+  @media screen and (min-width: 769px) {
+    .pasos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

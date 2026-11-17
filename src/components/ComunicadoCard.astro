@@ -1,0 +1,117 @@
+---
+import type { IComunicado, ICategoriaComunicado } from "@datatypes/datatypes";
+import { formatFechaLarga } from "@datatypes/utils";
+
+interface Props {
+  comunicado: IComunicado;
+}
+
+const { comunicado } = Astro.props;
+
+const categoriaLabels: Record<ICategoriaComunicado, string> = {
+  aviso: "Aviso",
+  comunicado: "Comunicado",
+  administrativo: "Administrativo",
+};
+---
+
+<article class:list={["comunicado-card", `cat-${comunicado.categoria}`]}>
+  <div class="comunicado-top">
+    <span class="badge-categoria">{categoriaLabels[comunicado.categoria]}</span>
+    {comunicado.destacado && <span class="badge-destacado">Destacado</span>}
+    <time class="comunicado-fecha" datetime={comunicado.fecha}>
+      {formatFechaLarga(comunicado.fecha)}
+    </time>
+  </div>
+  <h2 class="comunicado-titulo">{comunicado.titulo}</h2>
+  <p class="comunicado-resumen">{comunicado.resumen}</p>
+  <details class="comunicado-detalle">
+    <summary>Leer comunicado completo</summary>
+    <p class="comunicado-contenido">{comunicado.contenido}</p>
+  </details>
+</article>
+
+<style>
+  .comunicado-card {
+    background-color: var(--white);
+    border: 1px solid var(--iron-200);
+    border-top: 4px solid var(--green-600);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cat-aviso {
+    border-top-color: #d99a1b;
+  }
+  .cat-administrativo {
+    border-top-color: var(--iron-500);
+  }
+  .comunicado-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge-categoria {
+    font-size: var(--text-12);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: var(--green-100);
+    color: var(--green-900);
+  }
+  .cat-aviso .badge-categoria {
+    background-color: #fdf3dd;
+    color: #7a5600;
+  }
+  .cat-administrativo .badge-categoria {
+    background-color: var(--iron-200);
+    color: var(--iron-800);
+  }
+  .badge-destacado {
+    font-size: var(--text-12);
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: var(--green-700);
+    color: var(--white);
+  }
+  .comunicado-fecha {
+    font-size: var(--text-12);
+    color: var(--iron-600);
+    margin-left: auto;
+  }
+  .comunicado-titulo {
+    font-size: var(--text-20);
+    color: var(--green-900);
+    line-height: 1.3;
+  }
+  .comunicado-resumen {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.5;
+  }
+  .comunicado-detalle summary {
+    font-size: var(--text-14);
+    font-weight: 700;
+    color: var(--green-700);
+    cursor: pointer;
+    padding: 6px 0;
+  }
+  .comunicado-detalle summary:hover {
+    text-decoration: underline;
+  }
+  .comunicado-contenido {
+    font-size: var(--text-14);
+    color: var(--iron-800);
+    line-height: 1.6;
+    white-space: pre-line;
+    border-left: 3px solid var(--green-200);
+    padding-left: var(--gap-sm);
+    margin-top: 6px;
+  }
+</style>

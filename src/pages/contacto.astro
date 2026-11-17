@@ -1,0 +1,171 @@
+---
+import { WHATSAPP_NUMBER } from "astro:env/client";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+import institucion from "@content/institucion.yml";
+import type { IInstitucion } from "@datatypes/datatypes";
+
+const info = institucion as IInstitucion;
+
+const mensajeConsulta = `Hola, deseo realizar una consulta a la ${info.nombreCorto}.`;
+const whatsappUrl = WHATSAPP_NUMBER
+  ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensajeConsulta)}`
+  : null;
+---
+
+<BaseLayout title="Contacto">
+  <main class="container">
+    <header class="page-head">
+      <h1 class="title">Contacto</h1>
+      <p class="page-intro">
+        Datos institucionales y orientación para realizar consultas a la
+        Unidad Educativa "Juan Carlos Barrientos Pérez".
+      </p>
+    </header>
+
+    <div class="contacto-grid">
+      <section class="contacto-card">
+        <h2 class="contacto-titulo">Dirección</h2>
+        <p class="contacto-texto">
+          {info.direccion}<br />
+          {info.departamento} – {info.pais}
+        </p>
+      </section>
+
+      <section class="contacto-card">
+        <h2 class="contacto-titulo">Atención</h2>
+        <p class="contacto-texto">
+          {info.atencion}<br />
+          {info.horario}
+        </p>
+      </section>
+
+      <section class="contacto-card">
+        <h2 class="contacto-titulo">Consultas</h2>
+        <p class="contacto-texto">
+          Las consultas sobre comunicados, reuniones o actividades deben
+          realizarse por los canales oficiales de la institución.
+        </p>
+      </section>
+
+      <section class="contacto-card">
+        <h2 class="contacto-titulo">Sugerencias</h2>
+        <p class="contacto-texto">
+          Puedes compartir ideas y propuestas de mejora mediante el formulario
+          de sugerencias de la plataforma.
+        </p>
+        <a class="contacto-link" href="/sugerencias">Ir al formulario →</a>
+      </section>
+    </div>
+
+    {whatsappUrl && (
+      <section class="whatsapp-section">
+        <h2 class="whatsapp-titulo">Comunicación por WhatsApp</h2>
+        <p class="whatsapp-texto">
+          Si necesitas orientación sobre el uso de la plataforma o deseas
+          realizar una consulta general, puedes escribir al canal de WhatsApp
+          habilitado para la comunidad educativa.
+        </p>
+        <a class="btn-whatsapp" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          Escribir por WhatsApp
+        </a>
+      </section>
+    )}
+
+    <aside class="nota">
+      Esta plataforma no sustituye los comunicados oficiales ni las reuniones
+      presenciales. La información publicada debe ser validada por la dirección
+      de la unidad educativa.
+    </aside>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--gap-lg);
+  }
+  .contacto-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-md);
+  }
+  .contacto-card {
+    background-color: var(--white);
+    border: 1px solid var(--iron-200);
+    border-top: 4px solid var(--green-600);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contacto-titulo {
+    font-size: var(--text-18);
+    color: var(--green-900);
+  }
+  .contacto-texto {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+  .contacto-link {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: var(--text-14);
+    font-weight: 700;
+    color: var(--green-700);
+  }
+  .contacto-link:hover {
+    text-decoration: underline;
+  }
+  .whatsapp-section {
+    margin-top: var(--gap-lg);
+    background-color: var(--green-50);
+    border: 1px solid var(--green-200);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    align-items: flex-start;
+  }
+  .whatsapp-titulo {
+    font-size: var(--text-18);
+    color: var(--green-900);
+  }
+  .whatsapp-texto {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+  .btn-whatsapp {
+    display: inline-block;
+    background-color: #25d366;
+    color: var(--white);
+    padding: 12px 22px;
+    min-height: 44px;
+    border-radius: 6px;
+    font-size: var(--text-14);
+    font-weight: 700;
+    transition: filter 0.2s;
+  }
+  .btn-whatsapp:hover {
+    filter: brightness(0.95);
+  }
+  .nota {
+    margin-top: var(--gap-lg);
+    background-color: var(--iron-100);
+    border-left: 4px solid var(--iron-400);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+  @media screen and (min-width: 769px) {
+    .contacto-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

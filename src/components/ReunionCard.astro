@@ -1,0 +1,141 @@
+---
+import type { IReunion } from "@datatypes/datatypes";
+import { formatFechaLarga, getDia, getMesCorto } from "@datatypes/utils";
+
+interface Props {
+  reunion: IReunion;
+  pasada?: boolean;
+}
+
+const { reunion, pasada = false } = Astro.props;
+---
+
+<article class:list={["reunion-card", { pasada }]}>
+  <div class="fecha-bloque" aria-hidden="true">
+    <span class="fecha-dia">{getDia(reunion.fecha)}</span>
+    <span class="fecha-mes">{getMesCorto(reunion.fecha)}</span>
+  </div>
+  <div class="reunion-info">
+    <div class="reunion-top">
+      <span class:list={["estado", pasada ? "estado-pasada" : "estado-proxima"]}>
+        {pasada ? "Realizada" : "Programada"}
+      </span>
+      <span class="dirigido">{reunion.dirigidoA}</span>
+    </div>
+    <h2 class="reunion-titulo">{reunion.titulo}</h2>
+    <p class="reunion-motivo">{reunion.motivo}</p>
+    <ul class="reunion-meta">
+      <li>
+        <span class="meta-label">Fecha:</span>
+        <time datetime={reunion.fecha}>{formatFechaLarga(reunion.fecha)}</time>
+      </li>
+      <li><span class="meta-label">Hora:</span> {reunion.hora}</li>
+      <li><span class="meta-label">Lugar:</span> {reunion.lugar}</li>
+    </ul>
+  </div>
+</article>
+
+<style>
+  .reunion-card {
+    display: flex;
+    gap: var(--gap-sm);
+    background-color: var(--white);
+    border: 1px solid var(--iron-200);
+    border-left: 4px solid var(--green-600);
+    border-radius: 8px;
+    padding: var(--gap-sm);
+  }
+  .reunion-card.pasada {
+    border-left-color: var(--iron-400);
+    background-color: var(--iron-50);
+  }
+  .fecha-bloque {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    background-color: var(--green-800);
+    color: var(--white);
+  }
+  .pasada .fecha-bloque {
+    background-color: var(--iron-500);
+  }
+  .fecha-dia {
+    font-size: var(--text-24);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .fecha-mes {
+    font-size: var(--text-12);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+  .reunion-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .reunion-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .estado {
+    font-size: var(--text-12);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .estado-proxima {
+    background-color: var(--green-100);
+    color: var(--green-900);
+  }
+  .estado-pasada {
+    background-color: var(--iron-200);
+    color: var(--iron-800);
+  }
+  .dirigido {
+    font-size: var(--text-12);
+    color: var(--iron-600);
+  }
+  .reunion-titulo {
+    font-size: var(--text-18);
+    color: var(--green-900);
+    line-height: 1.3;
+  }
+  .reunion-motivo {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.5;
+  }
+  .reunion-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: var(--text-14);
+    color: var(--iron-800);
+  }
+  .meta-label {
+    color: var(--green-700);
+    font-weight: 700;
+  }
+  @media screen and (min-width: 601px) {
+    .reunion-card {
+      padding: var(--gap-md);
+    }
+    .reunion-meta {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+    }
+  }
+</style>

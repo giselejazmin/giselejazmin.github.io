@@ -1,0 +1,72 @@
+- id: "calendario-examenes-ultimo-trimestre"
+  titulo: "Calendario de exámenes del último trimestre"
+  fecha: "2026-11-14"
+  categoria: "comunicado"
+  resumen: "Se publica el calendario de evaluaciones correspondiente al último trimestre de la gestión."
+  contenido: |
+    Se informa a la comunidad educativa que las evaluaciones del último trimestre se realizarán de acuerdo con el calendario establecido por cada curso.
+
+    Se recomienda a las familias acompañar el estudio de los estudiantes y revisar las indicaciones que cada docente comparta en el aula.
+
+    Cualquier consulta sobre fechas o contenidos debe realizarse directamente con la dirección o con el docente de curso.
+  destacado: true
+- id: "actualizacion-datos-familias"
+  titulo: "Actualización de datos de contacto de las familias"
+  fecha: "2026-11-10"
+  categoria: "administrativo"
+  resumen: "Se solicita a madres, padres y tutores actualizar sus datos de contacto en dirección."
+  contenido: |
+    Con el objetivo de mantener una comunicación oportuna, se solicita a las familias actualizar sus números de teléfono y dirección en la oficina de dirección.
+
+    La actualización puede realizarse en horario de jornada escolar. Los datos serán utilizados únicamente para la comunicación institucional.
+  destacado: false
+- id: "convocatoria-feria-educativa"
+  titulo: "Convocatoria para la feria educativa"
+  fecha: "2026-11-03"
+  categoria: "aviso"
+  resumen: "Estudiantes y docentes pueden inscribir sus proyectos para la feria educativa de ciencias y creatividad."
+  contenido: |
+    Se invita a estudiantes y docentes a participar en la feria educativa de ciencias y creatividad.
+
+    Las inscripciones se reciben en dirección hasta el viernes 14 de noviembre. Cada curso podrá presentar uno o más proyectos, con el acompañamiento de su docente guía.
+  destacado: false
+- id: "campana-materiales"
+  titulo: "Campaña de recolección de materiales"
+  fecha: "2026-10-28"
+  categoria: "aviso"
+  resumen: "Se inicia una campaña para reunir materiales educativos y de trabajo para la feria."
+  contenido: |
+    La comunidad educativa puede colaborar con materiales reciclables, papel, cartulinas y otros insumos para las actividades educativas de fin de gestión.
+
+    Los materiales deben entregarse a los representantes de curso o en la oficina de dirección.
+  destacado: false
+- id: "entrega-boletines-segundo-trimestre"
+  titulo: "Entrega de boletines del segundo trimestre"
+  fecha: "2026-10-20"
+  categoria: "comunicado"
+  resumen: "Se informa el procedimiento y las fechas para la entrega de boletines a las familias."
+  contenido: |
+    Se comunica a las familias que la entrega de boletines del segundo trimestre se realizará en la reunión de padres de familia convocada por cada curso.
+
+    En caso de no poder asistir, se deberá coordinar la entrega con la dirección de la unidad educativa.
+  destacado: false
+- id: "prevencion-cuidado"
+  titulo: "Medidas de prevención y cuidado en la unidad educativa"
+  fecha: "2026-10-06"
+  categoria: "administrativo"
+  resumen: "Se recuerdan las recomendaciones de cuidado y convivencia dentro de la unidad educativa."
+  contenido: |
+    Se recuerda a la comunidad educativa la importancia de respetar los horarios de ingreso y salida, cuidar los espacios comunes y mantener una convivencia respetuosa.
+
+    Ante cualquier situación que requiera atención, se debe informar a la dirección o al personal responsable.
+  destacado: false
+- id: "horario-atencion-direccion"
+  titulo: "Horario de atención de dirección"
+  fecha: "2026-09-15"
+  categoria: "administrativo"
+  resumen: "Se informa el horario de atención para consultas administrativas de las familias."
+  contenido: |
+    La dirección de la unidad educativa atiende consultas administrativas durante la jornada escolar, de lunes a viernes.
+
+    Se recomienda coordinar previamente las consultas que requieran mayor tiempo de atención.
+  destacado: false

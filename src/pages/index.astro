@@ -1,10 +1,291 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import ComunicadoCard from "@components/ComunicadoCard.astro";
+import ReunionCard from "@components/ReunionCard.astro";
+
+import institucion from "@content/institucion.yml";
+import reuniones from "@content/reuniones.yml";
+import comunicados from "@content/comunicados.yml";
+import type { IInstitucion, IReunion, IComunicado } from "@datatypes/datatypes";
+import { esFechaFutura } from "@datatypes/utils";
+
+const info = institucion as IInstitucion;
+
+const proximas = (reuniones as IReunion[])
+  .filter((reunion) => esFechaFutura(reunion.fecha))
+  .sort((a, b) => a.fecha.localeCompare(b.fecha))
+  .slice(0, 2);
+
+const ultimosComunicados = [...(comunicados as IComunicado[])]
+  .sort((a, b) => b.fecha.localeCompare(a.fecha))
+  .slice(0, 3);
+
+const accesos = [
+  {
+    href: "/reuniones",
+    titulo: "Reuniones y citaciones",
+    texto: "Consulta fechas, horas, lugares y motivos de las convocatorias.",
+  },
+  {
+    href: "/comunicados",
+    titulo: "Comunicados",
+    texto: "Avisos oficiales e información administrativa de la institución.",
+  },
+  {
+    href: "/actividades",
+    titulo: "Actividades y noticias",
+    texto: "Conoce las actividades y novedades de la comunidad educativa.",
+  },
+  {
+    href: "/sugerencias",
+    titulo: "Sugerencias",
+    texto: "Comparte tus ideas y propuestas para mejorar nuestra unidad educativa.",
+  },
+];
 ---
 
-<BaseLayout title="Pagina principal">
-  <main class="container-fluid">
-    <h1 class="title">Welcome to Astro!</h1>
-    <p class="subtitle">Happy coding!</p>
+<BaseLayout title="Inicio">
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <span class="hero-badge">Comunicación escolar</span>
+        <h1 class="hero-title">{info.nombre}</h1>
+        <p class="hero-lema">{info.lema}</p>
+        <p class="hero-text">
+          Plataforma digital informativa y de comunicación escolar para consultar
+          reuniones, comunicados y actividades, y para enviar sugerencias de mejora.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/reuniones">Ver reuniones</a>
+          <a class="btn btn-outline" href="/sugerencias">Enviar una sugerencia</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="accesos" aria-label="Accesos rápidos">
+        {accesos.map((acceso) => (
+          <a class="acceso-card" href={acceso.href}>
+            <h2 class="acceso-titulo">{acceso.titulo}</h2>
+            <p class="acceso-texto">{acceso.texto}</p>
+            <span class="acceso-link">Ingresar →</span>
+          </a>
+        ))}
+      </section>
+
+      <div class="home-grid">
+        <section class="home-col">
+          <div class="section-head">
+            <h2 class="section-title">Próximas reuniones</h2>
+            <a class="section-link" href="/reuniones">Ver todas</a>
+          </div>
+          {proximas.length ? (
+            <div class="reunion-list">
+              {proximas.map((reunion) => (
+                <ReunionCard reunion={reunion} />
+              ))}
+            </div>
+          ) : (
+            <p class="empty-state">
+              Por el momento no hay reuniones programadas. Consulta esta sección
+              para conocer las próximas convocatorias.
+            </p>
+          )}
+        </section>
+
+        <section class="home-col">
+          <div class="section-head">
+            <h2 class="section-title">Últimos comunicados</h2>
+            <a class="section-link" href="/comunicados">Ver todos</a>
+          </div>
+          <div class="comunicado-list">
+            {ultimosComunicados.map((comunicado) => (
+              <ComunicadoCard comunicado={comunicado} />
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <aside class="nota-institucional">
+        <h2 class="nota-titulo">Un espacio de apoyo, no un reemplazo</h2>
+        <p class="nota-texto">
+          Esta plataforma complementa los canales oficiales de la institución.
+          Los comunicados y reuniones publicados deben ser revisados y validados
+          por la dirección de la unidad educativa.
+        </p>
+      </aside>
+    </div>
   </main>
 </BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--green-800), var(--green-600));
+    color: var(--white);
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--padding-lg) var(--padding-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    text-align: center;
+    align-items: center;
+  }
+  .hero-badge {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: var(--text-12);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .hero-title {
+    color: var(--white);
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    line-height: 1.2;
+    max-width: 800px;
+  }
+  .hero-lema {
+    color: var(--green-100);
+    font-size: var(--text-18);
+    font-style: italic;
+    max-width: 680px;
+  }
+  .hero-text {
+    color: var(--green-100);
+    font-size: var(--text-14);
+    line-height: 1.6;
+    max-width: 680px;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap-sm);
+    margin-top: var(--gap-sm);
+  }
+  .accesos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+    margin-top: var(--gap-lg);
+  }
+  .acceso-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background-color: var(--white);
+    border: 1px solid var(--iron-200);
+    border-top: 4px solid var(--green-600);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .acceso-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  .acceso-titulo {
+    font-size: var(--text-18);
+    color: var(--green-900);
+  }
+  .acceso-texto {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.5;
+  }
+  .acceso-link {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: var(--text-14);
+    font-weight: 700;
+    color: var(--green-700);
+  }
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+    margin-top: var(--gap-lg);
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-sm);
+    margin-bottom: var(--gap-sm);
+  }
+  .section-title {
+    font-size: var(--text-22);
+    color: var(--green-900);
+  }
+  .section-link {
+    font-size: var(--text-14);
+    font-weight: 700;
+    color: var(--green-700);
+  }
+  .section-link:hover {
+    text-decoration: underline;
+  }
+  .reunion-list,
+  .comunicado-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+  .nota-institucional {
+    margin-top: var(--gap-lg);
+    background-color: var(--green-50);
+    border-left: 4px solid var(--green-600);
+    border-radius: 8px;
+    padding: var(--gap-md);
+  }
+  .nota-titulo {
+    font-size: var(--text-18);
+    color: var(--green-900);
+    margin-bottom: 6px;
+  }
+  .nota-texto {
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    min-height: 44px;
+    border-radius: 6px;
+    font-size: var(--text-14);
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .btn-primary {
+    background-color: var(--white);
+    color: var(--green-900);
+  }
+  .btn-primary:hover {
+    background-color: var(--green-100);
+  }
+  .btn-outline {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid rgba(255, 255, 255, 0.7);
+  }
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+  @media screen and (min-width: 900px) {
+    .hero-inner {
+      padding-left: var(--padding-md);
+      padding-right: var(--padding-md);
+    }
+    .home-grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const links = [
+  { href: "/", label: "Inicio" },
+  { href: "/reuniones", label: "Reuniones" },
+  { href: "/comunicados", label: "Comunicados" },
+  { href: "/actividades", label: "Actividades" },
+  { href: "/sugerencias", label: "Sugerencias" },
+  { href: "/contacto", label: "Contacto" },
+];
+---
+
+<header class="header">
+  <div class="header-inner">
+    <a class="brand" href="/">
+      <span class="brand-name">U.E. Juan Carlos Barrientos Pérez</span>
+      <span class="brand-sub">Plataforma informativa escolar</span>
+    </a>
+    <nav class="nav" aria-label="Navegación principal">
+      <span class="nav-list">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            class:list={["nav-link", { active: path === link.href }]}
+            aria-current={path === link.href ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))}
+      </span>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    background-color: var(--green-800);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .header-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    padding: var(--gap-sm) var(--padding-sm);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: var(--white);
+  }
+  .brand-name {
+    color: var(--white);
+    font-size: var(--text-16);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .brand-sub {
+    color: var(--green-200);
+    font-size: var(--text-12);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    width: 100%;
+  }
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-link {
+    color: var(--green-100);
+    font-size: var(--text-14);
+    padding: 10px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .nav-link:hover {
+    background-color: var(--green-700);
+    color: var(--white);
+  }
+  .nav-link.active {
+    background-color: var(--green-600);
+    color: var(--white);
+    font-weight: 700;
+  }
+  @media screen and (min-width: 900px) {
+    .header-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--gap-md);
+      padding: 10px var(--padding-md);
+    }
+    .nav {
+      flex-direction: row;
+      width: auto;
+    }
+    .nav-list {
+      overflow: visible;
+    }
+  }
+</style>

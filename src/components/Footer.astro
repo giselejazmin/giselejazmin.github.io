@@ -1,0 +1,140 @@
+---
+import institucion from "@content/institucion.yml";
+import type { IInstitucion } from "@datatypes/datatypes";
+
+const info = institucion as IInstitucion;
+const year = new Date().getFullYear();
+
+const links = [
+  { href: "/reuniones", label: "Reuniones y citaciones" },
+  { href: "/comunicados", label: "Comunicados" },
+  { href: "/actividades", label: "Actividades y noticias" },
+  { href: "/sugerencias", label: "Sugerencias" },
+  { href: "/contacto", label: "Contacto" },
+];
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-name">{info.nombre}</p>
+      <p class="footer-lema">{info.lema}</p>
+      <p class="footer-address">
+        {info.direccion}, {info.departamento} – {info.pais}
+      </p>
+      <p class="footer-tutor">Tutor: {info.tutor}</p>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-heading">Secciones</h2>
+      <ul class="footer-links">
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-heading">Sobre la plataforma</h2>
+      <p class="footer-text">
+        Espacio de apoyo para organizar la información institucional y recibir
+        sugerencias de la comunidad educativa.
+      </p>
+      <p class="footer-text">
+        No reemplaza los comunicados oficiales ni las reuniones presenciales.
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© {year} {info.nombreCorto}. Plataforma informativa escolar.</p>
+    <p>Contenido revisado y publicado por responsables autorizados de la institución.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--green-950);
+    color: var(--green-100);
+    margin-top: var(--gap-lg);
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-lg);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--padding-lg) var(--padding-sm) var(--gap-lg);
+  }
+  .footer-name {
+    color: var(--white);
+    font-size: var(--text-18);
+    font-weight: 700;
+    margin-bottom: var(--gap-sm);
+  }
+  .footer-lema {
+    color: var(--green-200);
+    font-size: var(--text-14);
+    line-height: 1.5;
+    margin-bottom: var(--gap-sm);
+  }
+  .footer-address {
+    color: var(--green-300);
+    font-size: var(--text-14);
+  }
+  .footer-tutor {
+    color: var(--green-300);
+    font-size: var(--text-14);
+    margin-top: 4px;
+  }
+  .footer-heading {
+    color: var(--white);
+    font-size: var(--text-16);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--gap-sm);
+  }
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-links a {
+    color: var(--green-100);
+    font-size: var(--text-14);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+  .footer-text {
+    color: var(--green-200);
+    font-size: var(--text-14);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--green-800);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--gap-sm) var(--padding-sm) var(--gap-md);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: var(--text-12);
+    color: var(--green-300);
+    text-align: center;
+  }
+  @media screen and (min-width: 769px) {
+    .footer-inner {
+      grid-template-columns: 2fr 1fr 1.5fr;
+      padding-left: var(--padding-md);
+      padding-right: var(--padding-md);
+    }
+    .footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+      padding-left: var(--padding-md);
+      padding-right: var(--padding-md);
+    }
+  }
+</style>

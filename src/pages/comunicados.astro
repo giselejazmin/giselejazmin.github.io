@@ -1,0 +1,55 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ComunicadoCard from "@components/ComunicadoCard.astro";
+
+import comunicados from "@content/comunicados.yml";
+import type { IComunicado } from "@datatypes/datatypes";
+
+const ordenados = [...(comunicados as IComunicado[])].sort((a, b) =>
+  b.fecha.localeCompare(a.fecha)
+);
+---
+
+<BaseLayout title="Comunicados">
+  <main class="container">
+    <header class="page-head">
+      <h1 class="title">Comunicados</h1>
+      <p class="page-intro">
+        Avisos oficiales, comunicados e información administrativa de la
+        Unidad Educativa "Juan Carlos Barrientos Pérez".
+      </p>
+    </header>
+
+    <div class="comunicado-list">
+      {ordenados.map((comunicado) => (
+        <ComunicadoCard comunicado={comunicado} />
+      ))}
+    </div>
+
+    <aside class="nota">
+      Los comunicados son revisados y publicados por responsables autorizados
+      de la institución. La información no confirmada no debe difundirse.
+    </aside>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--gap-lg);
+  }
+  .comunicado-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+  .nota {
+    margin-top: var(--gap-lg);
+    background-color: var(--iron-100);
+    border-left: 4px solid var(--iron-400);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+</style>

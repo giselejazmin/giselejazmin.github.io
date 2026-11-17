@@ -1,0 +1,92 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ReunionCard from "@components/ReunionCard.astro";
+
+import reuniones from "@content/reuniones.yml";
+import type { IReunion } from "@datatypes/datatypes";
+import { esFechaFutura } from "@datatypes/utils";
+
+const todas = reuniones as IReunion[];
+
+const proximas = todas
+  .filter((reunion) => esFechaFutura(reunion.fecha))
+  .sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+const pasadas = todas
+  .filter((reunion) => !esFechaFutura(reunion.fecha))
+  .sort((a, b) => b.fecha.localeCompare(a.fecha));
+---
+
+<BaseLayout title="Reuniones y citaciones">
+  <main class="container">
+    <header class="page-head">
+      <h1 class="title">Reuniones y citaciones</h1>
+      <p class="page-intro">
+        Consulta las fechas, horas, lugares y motivos de las reuniones,
+        citaciones y convocatorias dirigidas a la comunidad educativa.
+      </p>
+    </header>
+
+    <section aria-labelledby="proximas-reuniones">
+      <h2 id="proximas-reuniones" class="section-title">Próximas reuniones</h2>
+      {proximas.length ? (
+        <div class="reunion-list">
+          {proximas.map((reunion) => (
+            <ReunionCard reunion={reunion} />
+          ))}
+        </div>
+      ) : (
+        <p class="empty-state">
+          Por el momento no hay reuniones programadas. Consulta esta sección
+          para conocer las próximas convocatorias.
+        </p>
+      )}
+    </section>
+
+    {pasadas.length > 0 && (
+      <section class="section-pasadas" aria-labelledby="reuniones-anteriores">
+        <h2 id="reuniones-anteriores" class="section-title">Reuniones anteriores</h2>
+        <div class="reunion-list">
+          {pasadas.map((reunion) => (
+            <ReunionCard reunion={reunion} pasada />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <aside class="nota">
+      Las convocatorias publicadas en esta plataforma son de carácter
+      informativo. La asistencia y los detalles oficiales deben confirmarse con
+      la dirección de la unidad educativa.
+    </aside>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--gap-lg);
+  }
+  .section-title {
+    font-size: var(--text-20);
+    color: var(--green-900);
+    margin-bottom: var(--gap-sm);
+  }
+  .reunion-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+  .section-pasadas {
+    margin-top: var(--gap-lg);
+  }
+  .nota {
+    margin-top: var(--gap-lg);
+    background-color: var(--iron-100);
+    border-left: 4px solid var(--iron-400);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+</style>

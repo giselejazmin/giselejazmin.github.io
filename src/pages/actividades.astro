@@ -1,0 +1,61 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ActividadCard from "@components/ActividadCard.astro";
+
+import actividades from "@content/actividades.yml";
+import type { IActividad } from "@datatypes/datatypes";
+
+const ordenadas = [...(actividades as IActividad[])].sort((a, b) =>
+  b.fecha.localeCompare(a.fecha)
+);
+---
+
+<BaseLayout title="Actividades y noticias">
+  <main class="container">
+    <header class="page-head">
+      <h1 class="title">Actividades y noticias</h1>
+      <p class="page-intro">
+        Conoce las actividades, eventos y novedades de la comunidad educativa
+        de la Unidad Educativa "Juan Carlos Barrientos Pérez".
+      </p>
+    </header>
+
+    <div class="actividad-grid">
+      {ordenadas.map((actividad) => (
+        <ActividadCard actividad={actividad} />
+      ))}
+    </div>
+
+    <aside class="nota">
+      Las actividades publicadas son de carácter informativo. Los cambios de
+      fecha, lugar o horario serán comunicados por los canales oficiales de la
+      institución.
+    </aside>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-head {
+    margin-bottom: var(--gap-lg);
+  }
+  .actividad-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-md);
+  }
+  .nota {
+    margin-top: var(--gap-lg);
+    background-color: var(--iron-100);
+    border-left: 4px solid var(--iron-400);
+    border-radius: 8px;
+    padding: var(--gap-md);
+    font-size: var(--text-14);
+    color: var(--iron-700);
+    line-height: 1.6;
+  }
+  @media screen and (min-width: 769px) {
+    .actividad-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

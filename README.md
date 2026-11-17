@@ -1,59 +1,74 @@
-# Astro Skeleton Starter Kit
+# Plataforma Digital Informativa y de Comunicación Escolar
 
-## Guía de Instalación y Ejecución de un Proyecto con Bun 🚀
+Sitio web de la **Unidad Educativa "Juan Carlos Barrientos Pérez"** (San Julián –
+Santa Cruz – Bolivia), construido con Astro y Bun.
 
-### 1. 📥 Descargar el Repositorio desde GitHub como ZIP
+La plataforma permite:
 
-- Haz clic en el botón verde **"Code"**
-- Selecciona **"Download ZIP"**
-- Extrae el archivo ZIP en una carpeta de tu elección
+- Consultar reuniones, citaciones y convocatorias.
+- Leer comunicados administrativos, avisos y noticias.
+- Conocer las actividades de la comunidad educativa.
+- Enviar sugerencias y opiniones mediante WhatsApp.
+- Consultar los datos de contacto institucional.
 
-### 2. 🌐 Modificar datos del proyecto
+## Guía de instalación y ejecución
 
-- Navega a la carpeta del proyecto descomprimido. Ejemplo: `cd Descargas/astro-bun-skeleton-main`
-- Modifica el archivo `package.json` con los datos de tu proyecto
-- Renombra la carpeta `astro-bun-skeleton-main` por el dato **name** asignado en `package.json` 
-- Crea una copia del archivo `.env.development` y renombra la copia con el nombre de `.env`
+### 1. Requisitos
 
-### 3. 🧰 Instalar Dependencias
+- [Bun](https://bun.sh/) >= 1.2.0
 
-- Abre la terminal
-- Navega a la carpeta del proyecto descomprimido
-- Ejecuta: `bun install`
+### 2. Configurar el entorno
 
-### 4. 🚀 Ejecutar el Proyecto
+- Crea una copia del archivo `.env.development` y renómbrala como `.env`.
+- Actualiza `WHATSAPP_NUMBER` con el número que recibirá las sugerencias.
 
-- Ejecuta el comando: `bun run dev`
+### 3. Instalar dependencias
 
-### 5. 🌐 Abrir el Proyecto en el Navegador
+```bash
+bun install
+```
 
-- Abre tu navegador preferido
-- Ve a la dirección: <a href="http://localhost:4321" target="_blank">http://localhost:4321</a>
-- Recomendado: Google Chrome para mejor compatibilidad
+### 4. Ejecutar el proyecto
 
----
+```bash
+bun run dev
+```
 
-¡Listo! Ahora deberías tener el proyecto funcionando correctamente
+Abre <http://localhost:4321> en el navegador.
 
-## 🚀 Project Structure
+## Contenido editable
 
-| Folder                   | Description                                           |
-| :------------------------ | :----------------------------------------------- |
-| `src/assets`             | Archivo de imagenes, fuentes, etc. que seran optimizadas|
-| `src/components`             | Componentes de la pagina web |
-| `src/content`           | Archivos de contenido estructurado en formatos `*.json, *.ts, *.yml`          |
-| `src/layouts`         | Archivos con estructura basica para diferentes paginas del proyecto |
-| `src/pages`         | Archivos de paginas completas |
-| `src/scripts`         | Archivos de tipo `*.js * *.ts` necesarios para que funcione un un `page, layouts, etc.`|
-| `src/styles`         | Directorio principal que contiene archivos de tipo `*.css` para el proyecto |
+| Archivo                          | Contenido                                      |
+| :------------------------------- | :--------------------------------------------- |
+| `src/content/institucion.yml`    | Nombre, lema, dirección y atención             |
+| `src/content/reuniones.yml`      | Reuniones y citaciones                         |
+| `src/content/comunicados.yml`    | Comunicados, avisos e información administrativa |
+| `src/content/actividades.yml`    | Actividades y noticias                         |
 
+Las fechas se escriben en formato `YYYY-MM-DD`.
 
-## 🧞 Commands
+> **Importante:** los registros incluidos son de ejemplo. La institución debe
+> revisarlos, reemplazarlos y validarlos antes de publicar la plataforma.
 
-All commands are run from the root of the project, from a terminal:
+## Estructura del proyecto
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Instala las dependencias|
-| `bun run dev`             | Inicia un servidor local en `localhost:4321`      |
-| `bun run build`           | Construye la pagina web en la carpeta `./dist/`|
+| Carpeta          | Descripción                                                    |
+| :--------------- | :------------------------------------------------------------- |
+| `src/assets`     | Imágenes y fuentes optimizadas por Astro                       |
+| `src/components` | Header, Footer y tarjetas (reunión, comunicado, actividad)     |
+| `src/content`    | Contenido estructurado en YAML                                 |
+| `src/layouts`    | Estructura base de las páginas                                 |
+| `src/pages`      | Páginas del sitio                                              |
+| `src/scripts`    | Scripts del cliente (envío de sugerencias)                     |
+| `src/styles`     | Estilos globales                                               |
+| `src/types`      | Tipos, interfaces y utilidades                                 |
+
+## Comandos
+
+| Comando           | Acción                                            |
+| :---------------- | :------------------------------------------------ |
+| `bun install`     | Instala las dependencias                          |
+| `bun run dev`     | Inicia el servidor local en `localhost:4321`      |
+| `bun run build`   | Construye el sitio en `./dist/`                   |
+| `bun run preview` | Sirve el build localmente                         |
+| `bunx astro check`| Verifica tipos y errores del proyecto             |
