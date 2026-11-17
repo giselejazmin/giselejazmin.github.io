@@ -31,6 +31,7 @@ jobs:
 
       - name: Build site
         env:
+          API_URL: ${{ vars.API_URL }}
           WHATSAPP_NUMBER: ${{ vars.WHATSAPP_NUMBER }}
         run: bun run build
 
